@@ -19,9 +19,9 @@ vim.api.nvim_set_hl(0, "CppBlue", { fg = "#82acfa" })
 vim.api.nvim_set_hl(0, "CppPink", { fg = "#ff85ff" })
 vim.api.nvim_set_hl(0, "CppCyan", { fg = "#51c7d6" })
 vim.api.nvim_set_hl(0, "CppYellow", { fg = "#ffec96" })
-vim.api.nvim_set_hl(0, "CppRed", { fg = "#c20404" })
+vim.api.nvim_set_hl(0, "CppRed", { fg = "#fc5365" })
 vim.api.nvim_set_hl(0, "CppWhite", { fg = "#d4d4d4" })
-vim.api.nvim_set_hl(0, "CppGreen", { fg = "#00ff00" })
+vim.api.nvim_set_hl(0, "CppGreen", { fg = "#6efa7a" })
 vim.api.nvim_set_hl(0, "CppGolden", { fg = "#ffaa00" })
 
 -- ============================================================================
@@ -73,21 +73,12 @@ vim.api.nvim_create_autocmd("FileType", {
             "priority_queue", "set", "multiset", "unordered_set", "unordered_multiset",
             "map", "multimap", "unordered_map", "unordered_multimap", "bitset",
             "Color", "Direction", "Container", "Compare", "Args", "Head", "Tail",
-            "Fun", "Fenwick", "Dungeon"
-        }
-        
-        local preprocessor_keywords = {
-            "include", "ifndef", "ifdef", "endif", "pragma", "error", "warning",
-            "else", "elif", "undef", "define", "Conquer_Dungeon", "__LINE__", "__VA_ARGS__"
+            "Fun", "Fenwick",
         }
         
         vim.fn.matchadd("CppBlue", "\\<\\(" .. table.concat(cpp_keywords, "\\|") .. "\\)\\>", 20)
         vim.fn.matchadd("CppBlue", "\\<\\(" .. table.concat(cpp_constants, "\\|") .. "\\)\\>", 20)
         vim.fn.matchadd("CppPink", "\\<\\(" .. table.concat(cpp_types, "\\|") .. "\\)\\>", 20)
-        
-        vim.fn.matchadd("CppRed", "#", 20)
-        vim.fn.matchadd("CppRed", "\\<\\(" .. table.concat(preprocessor_keywords, "\\|") .. "\\)\\>", 20)
-        vim.fn.matchadd("CppGolden", "\\<Equip_Weapons\\>", 20)
         
         -- Priority 25: Strings
         vim.fn.matchadd("CppGreen", [["[^"]*"]], 25)
@@ -97,6 +88,7 @@ vim.api.nvim_create_autocmd("FileType", {
         local stl_containers = {
             "vector", "map", "set", "queue", "stack", "list", "array", "bitset"
         }
+
         vim.fn.matchadd("CppWhite", "<\\zs\\(" .. table.concat(stl_containers, "\\|") .. "\\)\\ze>", 30)
         
         local angle_bracket_types = {
@@ -105,8 +97,21 @@ vim.api.nvim_create_autocmd("FileType", {
             "float", "double", "long", "short", "char", "bool",
             "wchar_t", "char16_t", "char32_t"
         }
+
         vim.fn.matchadd("CppGreen", "<\\s*\\(" .. table.concat(angle_bracket_types, "\\|") .. "\\)\\s*>", 30)
-        
+
+        -- Priority 35: Comments and preprocessor base (higher than everything else)
+        local preprocessor_keywords = {
+            "include", "ifndef", "ifdef", "endif", "pragma", "error", "warning",
+            "else", "elif", "undef", "define", "equip_weapons", "__LINE__", "__VA_ARGS__"
+        }
+
+        local pattern = "^\\s*#\\s*\\(" .. table.concat(preprocessor_keywords, "\\|") .. "\\)\\>"
+
+        -- Highlight all preprocessor directives at once
+        vim.fn.matchadd("CppRed", pattern, 35)
+        vim.fn.matchadd("CppRed", "#\\ze\\w", 35)        
+
         -- Priority 35: Comments
         vim.fn.matchadd("CppRed", "//.*$", 35)
         vim.fn.matchadd("CppRed", "/\\*[^*]*\\*/", 35)
