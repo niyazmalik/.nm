@@ -75,10 +75,15 @@ vim.api.nvim_create_autocmd("FileType", {
             "Color", "Direction", "Container", "Compare", "Args", "Head", "Tail",
             "Fun", "Fenwick",
         }
+
+        local cpp_customs = {
+            "equip_weapons",
+        }
         
         vim.fn.matchadd("CppBlue", "\\<\\(" .. table.concat(cpp_keywords, "\\|") .. "\\)\\>", 20)
         vim.fn.matchadd("CppBlue", "\\<\\(" .. table.concat(cpp_constants, "\\|") .. "\\)\\>", 20)
         vim.fn.matchadd("CppPink", "\\<\\(" .. table.concat(cpp_types, "\\|") .. "\\)\\>", 20)
+        vim.fn.matchadd("CppRed", "\\<\\(" .. table.concat(cpp_customs, "\\|") .. "\\)\\>", 20)
         
         -- Priority 25: Strings
         vim.fn.matchadd("CppGreen", [["[^"]*"]], 25)
@@ -103,7 +108,7 @@ vim.api.nvim_create_autocmd("FileType", {
         -- Priority 35: Comments and preprocessor base (higher than everything else)
         local preprocessor_keywords = {
             "include", "ifndef", "ifdef", "endif", "pragma", "error", "warning",
-            "else", "elif", "undef", "define", "equip_weapons", "__LINE__", "__VA_ARGS__"
+            "else", "elif", "undef", "define", "__VA_ARGS__"
         }
 
         local pattern = "^\\s*#\\s*\\(" .. table.concat(preprocessor_keywords, "\\|") .. "\\)\\>"
