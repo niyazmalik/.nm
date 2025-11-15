@@ -210,5 +210,37 @@ ls.add_snippets("cpp", {
             "};",
             "",
         })
-    })
+    }),
+
+    -- DSU (Disjoint Set Union)
+    s("dsu", {
+        t({
+            "struct DSU {",
+            "      vector<int> parent, size;",
+            "      ",
+            "      DSU(int n) : parent(n), size(n, 1) {",
+            "            iota(parent.begin(), parent.end(), 0);",
+            "      }",
+            "      ",
+            "      int find(int x) {",
+            "            if (x != parent[x]) parent[x] = find(parent[x]);",
+            "            return parent[x];",
+            "      }",
+            "      ",
+            "      bool same(int x, int y) { return find(x) == find(y); }",
+            "      ",
+            "      bool unite(int x, int y) {",
+            "            x = find(x), y = find(y);",
+            "            if (x == y) return false;",
+            "            if (size[x] < size[y]) swap(x, y);",
+            "            parent[y] = x;",
+            "            size[x] += size[y];",
+            "            return true;",
+            "      }",
+            "      ",
+            "      int getSize(int x) { return size[find(x)]; }",
+            "};",
+            "",
+        })
+    }),
 })
