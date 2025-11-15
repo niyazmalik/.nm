@@ -21,7 +21,7 @@ ls.add_snippets("cpp", {
             "namespace soon {",
             "      using namespace std;",
             "",
-            "      auto summon_power = [&]() {",
+            "      auto summon_power = []() {",
             "            ios::sync_with_stdio(false);",
             "            cin.tie(nullptr);",
             "      };",
