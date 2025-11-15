@@ -76,14 +76,10 @@ vim.api.nvim_create_autocmd("FileType", {
             "Fun", "Fenwick",
         }
 
-        local cpp_customs = {
-            "equip_weapons",
-        }
         
         vim.fn.matchadd("CppBlue", "\\<\\(" .. table.concat(cpp_keywords, "\\|") .. "\\)\\>", 20)
         vim.fn.matchadd("CppBlue", "\\<\\(" .. table.concat(cpp_constants, "\\|") .. "\\)\\>", 20)
         vim.fn.matchadd("CppPink", "\\<\\(" .. table.concat(cpp_types, "\\|") .. "\\)\\>", 20)
-        vim.fn.matchadd("CppRed", "\\<\\(" .. table.concat(cpp_customs, "\\|") .. "\\)\\>", 20)
         
         -- Priority 25: Strings
         vim.fn.matchadd("CppGreen", [["[^"]*"]], 25)

@@ -28,7 +28,7 @@ vim.opt.showmode = false
 vim.opt.shortmess:append("IWc")
 
 -- Indentation
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 6
+vim.opt.shiftwidth = 6
 vim.opt.expandtab = true
 vim.opt.autoindent = true
